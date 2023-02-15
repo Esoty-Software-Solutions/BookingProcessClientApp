@@ -1,0 +1,247 @@
+<nz-spin [nzSpinning]="pageLoading">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div
+      class="flex"
+      nz-form
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm()"
+    >
+      <div>
+        <div
+          class="h-[159px] mb-[13px] w-[180px] border-dashed border-primary flex items-center justify-center flex-col border-[2px] rounded-[12px] relative"
+        >
+          <span
+            nz-icon
+            class="text-3xl text-primary"
+            nzType="cloud-upload"
+            nzTheme="outline"
+          ></span>
+          <h4 class="text-sm text-primary font-semibold mt-5">Upload image</h4>
+          <input
+            type="file"
+            multiple
+            accept="image/x-png,image/gif,image/jpeg"
+            (change)="handleImageChange($event)"
+            class="absolute top-0 left-0 h-full w-full z-50 opacity-0 outline-none cursor-pointer"
+          />
+        </div>
+        <div class="grid grid-cols-3 gap-[6px] rounded-[5px]">
+          <div
+            *ngFor="let item of imagesUrls; let i = index"
+            class="relative"
+            ngClass="h-[50px] w-[56px]"
+          >
+            <img
+              [src]="item"
+              alt=""
+              class="h-full w-full object-cover rounded-[5px]"
+            />
+            <div
+              class="absolute -right-1 -bottom-1 z-50"
+              (click)="onImageRemove(i)"
+            >
+              <img
+                src="../../../../assets/icons/transh-fill.png"
+                class="h-[16px] w-[16px] cursor-pointer"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1 ml-[30px]">
+        <div class="flex gap-[18px] mb-[15px]">
+          <div class="w-[157px]">
+            <nz-form-label>Center Name</nz-form-label>
+            <nz-form-control>
+              <input
+                formControlName="name"
+                type="text"
+                nz-input
+                placeholder="Center Name"
+              />
+            </nz-form-control>
+          </div>
+          <div class="w-[257px]">
+            <nz-form-label>Address</nz-form-label>
+            <nz-form-control>
+              <input
+                type="text"
+                formControlName="address"
+                nz-input
+                placeholder="Souk Jumaa"
+              />
+            </nz-form-control>
+          </div>
+          <div class="w-[95px]">
+            <nz-form-label>District</nz-form-label>
+            <nz-form-control>
+              <input
+                formControlName="district"
+                type="text"
+                nz-input
+                placeholder="NewYork"
+              />
+            </nz-form-control>
+          </div>
+          <div class="w-[95px]">
+            <nz-form-label>City</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                formControlName="city"
+                nzSize="default"
+                nzPlaceHolder="Select City"
+              >
+                <nz-option
+                  *ngFor="let item of citiesOptions"
+                  [nzValue]="item?.value"
+                  [nzLabel]="item?.label"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </div>
+        </div>
+        <nz-form-label>Email</nz-form-label>
+        <nz-form-control>
+          <input
+            formControlName="email"
+            type="text"
+            nz-input
+            placeholder="Email"
+          />
+        </nz-form-control>
+        <div class="w-full mb-[15px]">
+          <nz-form-label>Description</nz-form-label>
+          <nz-form-control>
+            <textarea
+              formControlName="description"
+              nz-input
+              nzType="textarea"
+              placeholder="Description"
+              rows="4"
+              nzSize="large"
+            ></textarea>
+          </nz-form-control>
+        </div>
+        <div class="w-full">
+          <nz-form-label>Contact</nz-form-label>
+          <div
+            class="flex items-center mb-[6px]"
+            *ngFor="
+              let addressGroup of validateForm.get('phoneNumber')['controls'];
+              let i = index
+            "
+            [formGroup]="addressGroup"
+          >
+            <nz-form-control>
+              <input
+                type="text"
+                nz-input
+                formControlName="number"
+                placeholder="Enter Phone Number"
+              />
+            </nz-form-control>
+            <div
+              class="h-[38px] w-[38px] bg-[#fff2f2] flex items-center justify-center rounded-[6px] ml-[11px] cursor-pointer"
+              (click)="removePhoneNumber(i)"
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                class="text-[#FB576A]"
+              ></span>
+            </div>
+          </div>
+          <button
+            nz-button
+            nzType="dashed"
+            nzSize="large"
+            (click)="addPhoneNumber()"
+            type="button"
+            class="text-primary mb-[25px] text-[12px] font-semibold w-[100px] h-[38px]"
+          >
+            + Add
+          </button>
+          <div class="mb-[11px]">
+            <nz-input-group [nzPrefix]="prefixTemplateUser">
+              <nz-form-control>
+                <input
+                  formControlName="facebookLink"
+                  type="text"
+                  nz-input
+                  placeholder="https://facebook.com/"
+                />
+              </nz-form-control>
+            </nz-input-group>
+            <ng-template #prefixTemplateUser>
+              <img
+                src="../../../../assets/icons/facebook.png"
+                class="h-[18px] mr-[12px]"
+                alt=""
+              />
+            </ng-template>
+          </div>
+          <div class="mb-[11px]">
+            <nz-input-group [nzPrefix]="prefixTemplateUse1r">
+              <nz-form-control>
+                <input
+                  formControlName="googleMapLink"
+                  type="text"
+                  nz-input
+                  placeholder="https://sdfsadfdsafdsafdsafsad"
+                />
+              </nz-form-control>
+            </nz-input-group>
+            <ng-template #prefixTemplateUse1r>
+              <img
+                src="../../../../assets/icons/calander.png"
+                class="h-[18px] mr-[12px]"
+                alt=""
+              />
+            </ng-template>
+          </div>
+          <div class="">
+            <nz-input-group [nzPrefix]="prefixTemplateUsde1r">
+              <nz-form-control>
+                <input
+                  formControlName="website"
+                  type="text"
+                  nz-input
+                  placeholder="https://sdfsadfdsafdsafdsafsad"
+                />
+              </nz-form-control>
+            </nz-input-group>
+            <ng-template #prefixTemplateUsde1r>
+              <span
+                nz-icon
+                nzType="ie"
+                class="h-[18px] mr-[12px]"
+                nzTheme="outline"
+              ></span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end mt-[57px]">
+      <button
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        class="text-[12px] font-semibold w-[100px] h-[38px] rounded-full text-[#B8B8B8] bg-[#F3F3F3] border-[#F3F3F3]"
+      >
+        Cancel
+      </button>
+      <button
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        type="submit"
+        class="text-[12px] font-semibold w-[100px] h-[38px] rounded-full bg-success ml-[11px]"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</nz-spin>

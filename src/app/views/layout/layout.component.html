@@ -1,0 +1,13 @@
+<header class="fixed top-0 left-0 w-screen z-10">
+  <app-header (toggleSidebar)="onToggleSidebar($event)"></app-header>
+</header>
+<aside class="sidebar fixed left-0 top-[90px] p-4 pr-0 rounded-[13px]" [ngClass]="{ active: isSidebarOpen }">
+  <div class="overflow-y-scroll sidebar-inner hide-scrollbar rounded-[13px]">
+    <app-sidebar></app-sidebar>
+  </div>
+</aside>
+<main class="content pt-[90px]" [ngClass]="{ active: !isSidebarOpen }">
+  <div class="h-screen w-full p-4">
+    <router-outlet></router-outlet>
+  </div>
+</main>

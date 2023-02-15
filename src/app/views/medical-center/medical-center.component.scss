@@ -1,0 +1,13 @@
+.content-right-blk {
+  flex: 0 0 400px;
+  max-width: 400px;
+  width: 400px;
+  margin-left: 20px;
+}
+.table-blk {
+  flex: 1;
+  overflow-x: scroll;
+  tr.active td {
+    background: #e4f3f3;
+  }
+}

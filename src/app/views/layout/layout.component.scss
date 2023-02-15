@@ -1,0 +1,20 @@
+.sidebar {
+  transition: 0.4s all ease-in-out;
+  margin-left: -241px;
+  &.active {
+    margin-left: 0;
+    width: 241px;
+  }
+}
+.content {
+  transition: 0.4s all ease-in-out;
+  margin-left: 240px;
+  &.active {
+    margin-left: 0px;
+  }
+}
+.sidebar-inner {
+  height: calc(100vh - 124px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}

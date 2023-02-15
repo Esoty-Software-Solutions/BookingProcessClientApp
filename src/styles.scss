@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+  background: #e5e5e5;
+}
+/* width */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+/* Track */
+.hide-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle on hover */
+.hide-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

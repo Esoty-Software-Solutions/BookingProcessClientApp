@@ -1,0 +1,18 @@
+.nav-item {
+  a {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+    border-radius: 10px;
+    color: #bfcbcc;
+    @apply flex items-center space-x-[19px] p-[14px] mb-[20px];
+    transition: all 0.4s ease-in-out;
+    &.active {
+      color: #fff;
+      background: #39bcc0;
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+}

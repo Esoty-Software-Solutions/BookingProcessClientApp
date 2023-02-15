@@ -1,0 +1,107 @@
+<nz-spin [nzSpinning]="pageLoading">
+  <div class="min-h-[130px] px-[32px] py-[6px] bg-white boxShadow-primary rounded-xl mb-[35px]">
+    <div class="grid grid-cols-4 items-end gap-[15px]">
+      <div class="">
+        <nz-form-label>City</nz-form-label>
+        <nz-form-control>
+          <nz-select [(ngModel)]="selectedCity" nzSize="default" nzPlaceHolder="List of cities"
+            (ngModelChange)="onChangeCity($event)">
+            <nz-option *ngFor="let item of citiesOptions" [nzValue]="item?.value" [nzLabel]="item?.label"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+      <div class="">
+        <div class="flex items-center flex-1 justify-end select-none">
+          <div class="bg-[#F5F5F5] h-[46px] max-w-[335px] w-full rounded-full relative">
+            <input (keyup)="onSearch($event)" type="text" placeholder="Search here..."
+              class="h-full w-full text-[13px] font-medium bg-[#F5F5F5] outline-none px-[16px] rounded-full" />
+            <div class="absolute right-0 top-0 flex items-center h-full pr-4">
+              <img src="../../../../assets/icons/search.png" class="" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <button nz-button (click)="onAddNewData()" nzSize="large"
+          class="rounded-full h-[46px] transition hover:bg-primary hover:text-white border-primary text-base text-primary font-semibold px-[24px]">
+          + Add New Data
+        </button>
+      </div>
+    </div>
+  </div>
+  <h2 class="text-[#999999] text-[18px] font-semibold">Data</h2>
+  <div class="flex">
+    <div class="table-blk bg-white rounded-[13px] p-[15px] col-span-8 flex-1">
+      <nz-table class="table-gaps" #basicTable [nzData]="listOfData" [nzScroll]="{ x: '500px' }" [nzPageSize]="10"
+        [nzFrontPagination]="false" (nzPageIndexChange)="onPageChange($event)" [nzShowPagination]="true"
+        [nzTotal]="total">
+        <thead>
+          <tr>
+            <th nzWidth="120px">CenterID</th>
+            <th nzWidth="150px">Certer Name</th>
+            <th nzWidth="200px">Description</th>
+            <th nzWidth="200px">Address</th>
+            <th nzWidth="150px">City</th>
+            <th nzWidth="150px">Contact</th>
+            <th nzWidth="100px">Links</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data"
+            [ngClass]="{'active': data?.medicalCenterId === selectedMedicalCenter?.medicalCenterId}">
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.medicalCenterId }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.name }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">
+              <span nz-typography nzEllipsis nz-popover [nzPopoverContent]="contentTemplateDescription">
+                <ng-template #contentTemplateDescription>
+                  <div class="w-[300px]">
+                    {{data.description }}
+                  </div>
+                </ng-template>
+                {{data.description }}
+              </span>
+            </td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)" nz-typography nzEllipsis>
+              <span nz-typography nzEllipsis nz-popover [nzPopoverContent]="contentTemplateAddress">
+                <ng-template #contentTemplateAddress>
+                  <div class="w-[300px]">
+                    {{data.address }}
+                  </div>
+                </ng-template>
+                {{data.address }}
+              </span>
+            </td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">
+              <div class="flex flex-col items-center justify-center">
+                <span class="block mb-1">{{ data.city }}</span>
+                <img src="../../../assets/icons/map.png" alt="" />
+              </div>
+            </td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">
+              <span *ngFor="let ph of data?.phoneNumber || []">
+                {{ ph }} <br />
+              </span>
+            </td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">
+              <a [href]="data.facebookLink" class="text-primary text-[12px] cursor-pointer underline block"
+                target="_blank">
+                Facebook
+              </a>
+              <a [href]="data.facebookLink" class="text-primary text-[12px] cursor-pointer underline block"
+                target="_blank">
+                WebSite
+              </a>
+              <a [href]="data.googleMapLink" class="text-primary text-[12px] cursor-pointer underline block"
+                target="_blank">
+                Google Map
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="content-right-blk" *ngIf="showRightDrawer" [@fadeInRight]>
+      <app-details-widget [data]="selectedMedicalCenter"></app-details-widget>
+    </div>
+  </div>
+</nz-spin>

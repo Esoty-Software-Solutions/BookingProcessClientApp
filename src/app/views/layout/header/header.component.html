@@ -1,0 +1,64 @@
+<header class="px-[42px] flex justify-between items-center py-[21px] bg-white">
+  <div class="flex items-center">
+    <div class="w-20">
+      <img
+        *ngIf="isSidebarOpen"
+        (click)="onToggleSidebar()"
+        src="../../../../assets/icons/x.png"
+        class="h-5 w-5 cursor-pointer select-none"
+        alt=""
+      />
+      <span
+        *ngIf="!isSidebarOpen"
+        nz-icon
+        (click)="onToggleSidebar()"
+        class="text-2xl cursor-pointer select-none"
+        nzType="menu-unfold"
+        nzTheme="outline"
+      ></span>
+    </div>
+    <img
+      src="../../../../assets/logo.png"
+      class="w-[127px] select-none"
+      alt=""
+    />
+  </div>
+  <div class="flex items-center flex-1 justify-end select-none">
+    <div
+      class="bg-[#F5F5F5] h-[46px] max-w-[335px] w-full rounded-full relative"
+    >
+      <input
+        type="text"
+        placeholder="Search here..."
+        class="h-full w-full text-[13px] font-medium bg-[#F5F5F5] outline-none px-[16px] rounded-full"
+      />
+      <div class="absolute right-0 top-0 flex items-center h-full pr-4">
+        <img src="../../../../assets/icons/search.png" class="" alt="" />
+      </div>
+    </div>
+    <div class="relative mx-[55px]">
+      <div
+        class="h-2 w-2 rounded-full bg-[#FFA41B] absolute -right-[10px] top-0"
+      ></div>
+      <img src="../../../../assets/icons/bell.png" class="h-5" alt="" />
+    </div>
+    <div
+      class="flex items-center space-x-5 cursor-pointer"
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      nzTrigger="click"
+    >
+      <h5 class="text-base font-semibold text-dark">Hi, John</h5>
+      <div class="rounded-full border-2 p-1 border-solid border-[#60C5C1]">
+        <img class="w-9" src="../../../../assets/user.png" alt="" />
+      </div>
+    </div>
+  </div>
+</header>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li nz-menu-item>Inbox</li>
+    <li nz-menu-item>Settings</li>
+    <li nz-menu-item nzDanger (click)="onLogout()">Logout</li>
+  </ul>
+</nz-dropdown-menu>

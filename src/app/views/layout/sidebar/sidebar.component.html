@@ -1,0 +1,65 @@
+<div class="py-4 bg-white h-full rounded-[13px] pb-14">
+  <div class="border-b-2 border-solid border-[#F7F7F7] pb-4 px-4">
+    <div class="flex items-center justify-center pt-[27px]">
+      <div class="rounded-full w-[94px] h-[94px] border-2 p-1 border-solid border-[#60C5C1]">
+        <img class="w-[82px] h-[82px]" src="../../../../assets/user.png" alt="" />
+      </div>
+    </div>
+    <div class="text-center mt-2">
+      <h2 class="text-[16px] font-semibold text-black">John William</h2>
+      <p class="text-[10px] font-medium text-primary">User Account</p>
+    </div>
+  </div>
+  <nav class="px-[13px] mt-[17px] bg-white overflow-y-scroll hide-scrollbar">
+    <ul>
+      <li class="nav-item">
+        <a [routerLink]="[ '/process-booking' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/bag.png" alt="" />
+          <span>Process Booking</span>
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a [routerLink]="[ '/medical-center' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/medical-center.png" alt="" />
+          <span>Medical Center</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/doctor' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/doctor.png" alt="" />
+          <span>Doctor</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/institution' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/Institution.png" alt="" />
+          <span>Institution</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/expense-claims' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/expense-claims.png" alt="" />
+          <span>Expense Claims</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/medical-claims' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/expense-claims.png" alt="" />
+          <span>Medical Claims</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/admintration' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/expense-claims.png" alt="" />
+          <span>Admintration</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="[ '/process-booking' ]" routerLinkActive="active">
+          <img src="../../../../assets/icons/admintration.png" alt="" />
+          <span>Process Booking</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
