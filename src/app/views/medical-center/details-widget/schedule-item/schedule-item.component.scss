@@ -1,0 +1,30 @@
+.schedule {
+  @apply pt-2 pb-[12px] relative;
+}
+.schedule__item {
+  @apply grid grid-cols-12 items-start;
+}
+.schedule__days-blk {
+  @apply col-span-7;
+  .schedule__days {
+    @apply grid grid-cols-7 gap-1;
+  }
+  .schedule__days-item {
+    @apply h-[23px] w-[23px] justify-center rounded-full bg-[#F8F8F8] flex items-center text-[10px] font-semibold text-[#999999] relative;
+    &.active-day {
+      @apply bg-primary text-white;
+    }
+    input {
+      @apply absolute top-0 left-0 opacity-0 cursor-pointer h-full w-full z-50;
+    }
+  }
+}
+.schedule__label {
+  @apply text-[#263238] font-semibold uppercase text-[10px] mb-[5px];
+}
+.schedule__time-blk {
+  @apply col-span-5;
+}
+.schedule__delete {
+  @apply absolute top-0 right-0 cursor-pointer;
+}

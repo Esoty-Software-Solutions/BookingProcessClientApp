@@ -6,20 +6,20 @@
           <img src="assets/icons/gaticn.png" alt="" class="h-[31px] w-[31px]" />
         </div>
         <div class="flex-1 pl-[12px]">
-          <h2 class="text-white font-bold text-[18px]">{{data?.name}}</h2>
+          <h2 class="text-white font-bold text-[18px]">{{data?.firstName}} {{data?.lastName}}</h2>
           <p class="text-[12px] text-[#FFFFFF] opacity-[.65] font-medium my-1" nz-typography nz-typography nzEllipsis
             nz-popover [nzPopoverContent]="contentTemplateAddress" nzEllipsisRows="2">
             <ng-template #contentTemplateAddress>
               <div class="w-[300px]">
-                {{data.address }}
+                {{data?.specialty }}
               </div>
             </ng-template>
-            {{data.address }}
+            {{data?.specialty }}
           </p>
-          <p class="text-[12px] text-[#FFFFFF]">Street address</p>
+          <p class="text-[12px] text-[#FFFFFF]">{{data?.level}}</p>
         </div>
         <img src="assets/icons/edit-icon.png" class="h-[18px] w-[18px] absolute right-0 top-0 cursor-pointer"
-          (click)="onEditMedicalCenter()" alt="">
+          (click)="onEditDoctor()" alt="">
       </div>
       <div class="flex mt-[36px] justify-between items-center">
         <div class="">
@@ -29,8 +29,8 @@
         </div>
         <div class=" flex items-center px-[14px] py-[10px]  border-solid border-[1px] border-white rounded-[7px]">
           <span class="text-white" nz-icon nzType="plus" nzTheme="outline"></span>
-          <span class="text-[11px] text-white font-semibold ml-[10px] cursor-pointer" (click)="onAddDoctor()"> Add
-            Doctor</span>
+          <span class="text-[11px] text-white font-semibold ml-[10px] cursor-pointer" (click)="onAddCenter()">
+            Add Center</span>
         </div>
       </div>
       <div class="flex items-center space-x-[11px] py-[15px]">

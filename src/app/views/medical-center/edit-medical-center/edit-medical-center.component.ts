@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { ApiService } from '../../../core/services/apis/api.service';
+import { ICreateAMedicalCenter } from './../../../core/models/request.interfaces';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { getBase64 } from './../../../core/utils/util-functions';
-
+import { getBase64 } from '../../../core/utils/util-functions';
 @Component({
-  selector: 'app-add-new-medical-center',
-  templateUrl: './add-new-medical-center.component.html',
-  styleUrls: ['./add-new-medical-center.component.scss'],
+  selector: 'app-edit-medical-center',
+  templateUrl: './edit-medical-center.component.html',
+  styleUrls: ['./edit-medical-center.component.scss'],
 })
 @UntilDestroy()
-export class AddNewMedicalCenterComponent implements OnInit {
+export class EditMedicalCenterComponent implements OnInit {
+  @Input() id!: string;
   pageLoading = false;
   validateForm!: FormGroup;
   constructor(
@@ -37,6 +38,8 @@ export class AddNewMedicalCenterComponent implements OnInit {
       website: [null, [Validators.required]],
     });
     this.addPhoneNumber();
+    if (!this.id) return;
+    this.medicalCenterById(this.id);
   }
   get phoneNumbersCtrl(): FormArray<any> {
     return this.validateForm.get('phoneNumber') as FormArray;
@@ -48,10 +51,10 @@ export class AddNewMedicalCenterComponent implements OnInit {
     this.phoneNumbersCtrl.push(newPhoneNumber);
   }
   removePhoneNumber(index: number) {
-    // check if there is only one phone number
     if (this.phoneNumbersCtrl.length === 1) {
-      this.nzMessageService.error('You must have at least one phone number');
-      return;
+      return this.nzMessageService.error(
+        'You must have at least one phone number'
+      );
     }
     this.phoneNumbersCtrl.removeAt(index);
   }
@@ -80,6 +83,7 @@ export class AddNewMedicalCenterComponent implements OnInit {
       });
     }
     const payload = {
+      medicalCenterId: this.id,
       ...this.validateForm.value,
       phoneNumber: this.validateForm.value.phoneNumber.map(
         (item: any) => item.number
@@ -96,17 +100,17 @@ export class AddNewMedicalCenterComponent implements OnInit {
       const element = this.images[index];
       fm.append('images', element);
     }
-    this.createMedicalCenterRequest(fm);
+    this.updateMedicalCenterRequest(this.id, fm as any);
   }
-  createMedicalCenterRequest(payload: any) {
+  updateMedicalCenterRequest(id: string, payload: ICreateAMedicalCenter) {
     this.pageLoading = true;
     this.apiService
-      .createMedicalCenter(payload)
+      .updateMedicalCenterById(id, payload)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (res: any) => {
           this.pageLoading = false;
-          this.nzMessageService.success('Create medical center successfully');
+          this.nzMessageService.success('Update medical center successfully');
           this.nzModalRef.close(true);
         },
         error: (err) => (this.pageLoading = false),
@@ -131,7 +135,37 @@ export class AddNewMedicalCenterComponent implements OnInit {
         complete: () => {},
       });
   }
-  onCancel() {
-    this.nzModalRef.close();
+  medicalCenterById(id: string) {
+    this.pageLoading = true;
+    this.apiService
+      .medicalCenterById(id)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (res: any) => {
+          this.validateForm.patchValue({
+            name: res[0]?.name,
+            city: res[0]?.city,
+            district: res[0]?.district,
+            description: res[0]?.description,
+            address: res[0]?.address,
+            email: res[0]?.email,
+            facebookLink: res[0]?.facebookLink,
+            googleMapLink: res[0]?.googleMapLink,
+            website: res[0]?.website,
+          });
+          this.phoneNumbersCtrl.clear();
+          res[0]?.phoneNumber?.forEach((item: any) => {
+            this.addPhoneNumber();
+            this.phoneNumbersCtrl
+              .at(this.phoneNumbersCtrl.length - 1)
+              .patchValue({
+                number: item,
+              });
+          });
+          this.pageLoading = false;
+        },
+        error: (err) => (this.pageLoading = false),
+        complete: () => (this.pageLoading = false),
+      });
   }
 }

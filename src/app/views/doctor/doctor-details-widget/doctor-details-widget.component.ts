@@ -6,27 +6,30 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
+  IDoctorEntity,
   IMedicalCenterEntity,
   ISchedulesEntity,
 } from '../../../core/models/entities.interfaces';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AddDoctorComponent } from '../add-doctor/add-doctor.component';
-import { ApiService } from './../../../core/services/apis/api.service';
-import { EditMedicalCenterComponent } from './../edit-medical-center/edit-medical-center.component';
+import { AddCenterComponent } from '../add-center/add-center.component';
+import { AddDoctorComponent } from '../../medical-center/add-doctor/add-doctor.component';
+import { ApiService } from '../../../core/services/apis/api.service';
+import { EditDoctorComponent } from '../edit-doctor/edit-doctor.component';
+import { EditMedicalCenterComponent } from '../../medical-center/edit-medical-center/edit-medical-center.component';
 import { IFilterSchedulesRequest } from '../../../core/models/request.interfaces';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { debounce } from '../../../core/decorators/debounce.decorator';
 
 @Component({
-  selector: 'app-details-widget',
-  templateUrl: './details-widget.component.html',
-  styleUrls: ['./details-widget.component.scss'],
+  selector: 'app-doctor-details-widget',
+  templateUrl: './doctor-details-widget.component.html',
+  styleUrls: ['./doctor-details-widget.component.scss'],
 })
 @UntilDestroy()
-export class DetailsWidgetComponent implements OnInit, OnChanges {
+export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
   pageLoading = false;
-  @Input() data!: IMedicalCenterEntity;
+  @Input() data!: IDoctorEntity;
   constructor(
     private apiService: ApiService,
     private nzModalService: NzModalService
@@ -36,7 +39,7 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
     if (changes.data) {
       this.data = changes.data.currentValue;
       this.filterSchedules({
-        medicalCenterId: this.data?.medicalCenterId,
+        doctorId: this.data?.doctorId,
         limit: 10,
       });
     }
@@ -63,36 +66,36 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
   onSearch(e: any) {
     this.filterSchedules({
       searchQuery: this.searchTerm,
-      medicalCenterId: this.data?.medicalCenterId,
+      medicalCenterId: this.data?.doctorId,
       limit: 10,
     });
   }
-  onAddDoctor() {
+  onAddCenter() {
     this.nzModalService
       .create<any>({
-        nzContent: AddDoctorComponent,
+        nzContent: AddCenterComponent,
         nzWidth: '1200px',
         nzFooter: null,
         nzComponentParams: {
-          medicalCenterId: this.data?.medicalCenterId,
+          doctorId: this.data?.doctorId,
         },
       })
       .afterClose.subscribe((res) => {
         if (!res) return;
         this.filterSchedules({
-          medicalCenterId: this.data?.medicalCenterId,
+          doctorId: this.data?.doctorId,
           limit: 10,
         });
       });
   }
-  onEditMedicalCenter() {
+  onEditDoctor() {
     this.nzModalService.create({
-      nzTitle: 'Update medical center',
-      nzContent: EditMedicalCenterComponent,
+      nzTitle: 'Update Doctor',
+      nzContent: EditDoctorComponent,
       nzFooter: null,
       nzWidth: '1000px',
       nzComponentParams: {
-        id: this.data?.medicalCenterId,
+        id: this.data?.doctorId,
       },
     });
   }
@@ -104,7 +107,7 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
     this.infiniteScrollLoading = true;
     this.apiService
       .filterSchedules({
-        medicalCenterId: this.data?.medicalCenterId,
+        medicalCenterId: this.data?.doctorId,
         limit: 10,
         skip: this.schedulesList.length,
       })

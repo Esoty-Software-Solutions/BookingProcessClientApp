@@ -8,18 +8,20 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { ApiService } from '../../../core/services/apis/api.service';
-import { IDoctorEntity } from './../../../core/models/entities.interfaces';
+import { IDoctorEntity } from '../../../core/models/entities.interfaces';
+import { IMedicalCenterEntity } from './../../../core/models/entities.interfaces';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { debounce } from '../../../core/decorators/debounce.decorator';
+
 @Component({
-  selector: 'app-add-doctor',
-  templateUrl: './add-doctor.component.html',
-  styleUrls: ['./add-doctor.component.scss'],
+  selector: 'app-add-center',
+  templateUrl: './add-center.component.html',
+  styleUrls: ['./add-center.component.scss'],
 })
 @UntilDestroy()
-export class AddDoctorComponent implements OnInit {
-  @Input() medicalCenterId!: string;
+export class AddCenterComponent implements OnInit {
+  @Input() doctorId!: string;
   pageLoading = false;
   constructor(
     private apiService: ApiService,
@@ -27,31 +29,31 @@ export class AddDoctorComponent implements OnInit {
     private nzModalRef: NzModalRef
   ) {}
   ngOnInit() {
-    this.filterDoctors({
+    this.filterMedicalCenters({
       limit: 10,
     });
   }
   searchTerm: string = '';
   @debounce(500)
   onSearch({ target: { value } }: any) {
-    this.filterDoctors({
+    this.filterMedicalCenters({
       searchQuery: value,
       limit: 10,
     });
   }
   onPageChange(page: number) {
-    this.filterDoctors({
+    this.filterMedicalCenters({
       skip: (page - 1) * 10,
       limit: 10,
     });
   }
-  listOfData: IDoctorEntity[] = [];
+  listOfData: IMedicalCenterEntity[] = [];
   total = 1;
   currentPage = 1;
-  filterDoctors(options: IBaseFilterRequest) {
+  filterMedicalCenters(options: IBaseFilterRequest) {
     this.pageLoading = true;
     this.apiService
-      .filterDoctors(options)
+      .filterMedicalCenters(options)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (res: any) => {
@@ -63,11 +65,15 @@ export class AddDoctorComponent implements OnInit {
         complete: () => {},
       });
   }
-  onAddDoctor(data: IDoctorEntity) {
+  onAddCenter(data: IMedicalCenterEntity) {
+    console.log(
+      '🚀 ~ file: add-center.component.ts:69 ~ AddCenterComponent ~ onAddCenter ~ data',
+      data
+    );
     this.pageLoading = true;
     const payload: IAddScheduleRequest = {
-      medicalCenterId: this.medicalCenterId,
-      doctorId: data.doctorId,
+      doctorId: this.doctorId,
+      medicalCenterId: data.medicalCenterId,
       timeslot: 'morning',
       monday: false,
       tuesday: false,
@@ -86,7 +92,7 @@ export class AddDoctorComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.pageLoading = false;
-          this.nzMessageService.success('Doctor added successfully');
+          this.nzMessageService.success('Hospital added successfully');
           this.nzModalRef.close(true);
         },
         error: (err) => (this.pageLoading = false),

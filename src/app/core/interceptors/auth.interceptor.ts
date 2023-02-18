@@ -14,7 +14,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../services/utiils/local-storage.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
-
+import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
@@ -36,13 +36,13 @@ export class AuthInterceptor implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           Authorization: `${accessToken}`,
-          'Target-URL': 'https://dalilserver.onrender.com/v1',
+          'Target-URL': environment.baseApiUrl,
         },
       });
     } else {
       req = req.clone({
         setHeaders: {
-          'Target-URL': 'https://dalilserver.onrender.com/v1',
+          'Target-URL': environment.baseApiUrl,
         },
       });
     }

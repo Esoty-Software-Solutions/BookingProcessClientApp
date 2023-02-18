@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   IBaseFilterRequest,
-  IFilterMedicalCentersRequest,
+  IDoctorFilterRequest,
 } from '../../core/models/request.interfaces';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -16,6 +16,7 @@ import { ApiService } from './../../core/services/apis/api.service';
 import { IMedicalCenterEntity } from './../../core/models/entities.interfaces';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { debounce } from '../../core/decorators/debounce.decorator';
+
 @Component({
   selector: 'app-medical-center',
   templateUrl: './medical-center.component.html',
@@ -79,16 +80,15 @@ export class MedicalCenterComponent implements OnInit {
   }
   onPageChange(page: number) {
     this.filterMedicalCenters({
-      starting_after_object:
-        this.listOfData[this.listOfData.length - 1]?.medicalCenterId,
       limit: 10,
       city: this.selectedCity,
+      skip: (page - 1) * 10,
     });
   }
   listOfData: IMedicalCenterEntity[] = [];
   total = 1;
   currentPage = 1;
-  filterMedicalCenters(options: IFilterMedicalCentersRequest) {
+  filterMedicalCenters(options: IDoctorFilterRequest) {
     this.pageLoading = true;
     this.apiService
       .filterMedicalCenters(options)

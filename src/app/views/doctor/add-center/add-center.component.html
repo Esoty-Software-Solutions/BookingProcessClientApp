@@ -1,0 +1,48 @@
+<nz-spin [nzSpinning]="pageLoading">
+  <div class="flex items-center">
+    <h2 class="text-black font-semibold text-[22px] mr-[49px]">Add Hospital</h2>
+    <div class="bg-[#F5F5F5] h-[46px] max-w-[335px] w-full rounded-full relative">
+      <input [(ngModel)]="searchTerm" (keyup)="onSearch($event)" type="text" placeholder="Search here..."
+        class="h-full w-full text-[13px] font-medium bg-[#F5F5F5] outline-none px-[16px] rounded-full" />
+      <div class="absolute right-0 top-0 flex items-center h-full pr-4">
+        <img src="../../../../assets/icons/search.png" class="" alt="" />
+      </div>
+    </div>
+  </div>
+  <p class="text-[#C4C4C4] text-[12px]">232 Lisitngs..</p>
+  <nz-table class="table-gaps" #basicTable [nzData]="listOfData" [nzPageSize]="10" [nzFrontPagination]="false"
+    (nzPageIndexChange)="onPageChange($event)" [nzShowPagination]="true" [nzTotal]="total">
+    <thead>
+      <tr>
+        <th nzWidth="120px">CenterID</th>
+        <th nzWidth="220px">Certer Name</th>
+        <th nzWidth="150px">City</th>
+        <th nzWidth="100px">Contact</th>
+        <th nzWidth="100px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data?.medicalCenterId }}</td>
+        <td>{{ data?.name }}</td>
+        <td>{{ data.city }}</td>
+        <td class="cursor-pointer">
+          <span nz-typography nzEllipsis nz-popover [nzPopoverContent]="contentTemplatePhoneNumber">
+            <ng-template #contentTemplatePhoneNumber>
+              <div class="w-[300px]">
+                <b class="mb-2 font-bold block">{{data.name }}</b>
+                <div *ngFor="let ph of data?.phoneNumber || []" nz-typography nzCopyable [nzCopyText]="ph">
+                  {{ ph }}
+                </div>
+              </div>
+            </ng-template>
+            {{data.name }}
+          </span>
+        </td>
+        <td>
+          <button nz-button class="border-primary text-primary" (click)="onAddCenter(data)">+ Add</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>

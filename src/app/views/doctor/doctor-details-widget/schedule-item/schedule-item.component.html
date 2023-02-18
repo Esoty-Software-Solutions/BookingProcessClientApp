@@ -1,0 +1,74 @@
+<div class="mb-[7px] bg-white pt-[22px] px-[19px] rounded-[13px] pb-[15px] relative">
+  <button nz-button [nzSize]="'small'" nzType="link" nzDanger
+    class="absolute left-1/2 top-0 -translate-x-1/2 cursor-pointer" *ngIf="isEditMode">Delete</button>
+  <div class="flex relative pb-[14px]">
+    <img src="assets/icons/user.png" alt="" class="h-[45px] w-[45px]" />
+    <div class="flex-1 pl-[12px]">
+      <h2 class="text-[#292929] font-bold text-[18px]">{{data?.doctorObject.firstName}}
+        {{data?.doctorObject?.lastName}}</h2>
+      <p class="text-[12px] text-[#999999]">ID : {{data?.doctorObject?.doctorId}}</p>
+    </div>
+    <img *ngIf="!isEditMode" src="assets/icons/edit-icon-rgb.png"
+      class="h-[18px] w-[18px] absolute right-0 top-0 cursor-pointer" (click)="onEnableEdit()" alt="">
+  </div>
+  <div class="flex justify-between items-center py-[14px] border-b-2 border-solid border-[#F2F2F2]">
+    <h4 class="text-[11px] text-[#E0E0E0] flex items-center">Speciality:
+      <span class="font-semibold text-[12px]">{{data?.doctorObject.specialty}}</span>
+    </h4>
+    <h4 class="text-[11px] text-[#E0E0E0] flex items-center">Level:
+      <span class="font-semibold text-[12px]">eneral Doctor</span>
+    </h4>
+    <h2 class="text-[15px] text-primary font-semibold">20 Dinar</h2>
+  </div>
+  <div class="schedule">
+    <div class="schedule__item relative mb-3" *ngFor="
+    let addressGroup of validateForm.get('items')['controls']; let i = index" [formGroup]="addressGroup">
+      <div class="schedule__days-blk">
+        <h2 class="schedule__label">
+          <select formControlName="timeslot" *ngIf="isEditMode">
+            <option value="morning" label="Morning"></option>
+            <option value="evening" label="Evening"></option>
+          </select>
+          <span *ngIf="!isEditMode">{{addressGroup?.value?.timeslot}}</span>
+        </h2>
+        <div class="schedule__days mt-2">
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.saturday}">
+            Sat
+            <input type="checkbox" formControlName="saturday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.sunday}">
+            Sun <input type="checkbox" formControlName="sunday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.monday}">
+            Mon <input type="checkbox" formControlName="monday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.tuesday}">
+            Tue <input type="checkbox" formControlName="tuesday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.wednesday}">
+            Wed <input type="checkbox" formControlName="wednesday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.thursday}">
+            Thu <input type="checkbox" formControlName="thursday">
+          </div>
+          <div class="schedule__days-item" [ngClass]="{'active-day': addressGroup?.value?.friday}">
+            Fri <input type="checkbox" formControlName="friday">
+          </div>
+        </div>
+      </div>
+      <div class="schedule__time-blk">
+        <h2 class="schedule__label">Date Range</h2>
+        <nz-range-picker formControlName="dateTime"></nz-range-picker>
+      </div>
+      <button nz-button (click)="removeItem(i)" [nzSize]="'small'" nzType="link" class="schedule__delete"
+        *ngIf="isEditMode" nzDanger>
+        <span nz-icon nzType="delete" nzTheme="outline"></span>
+      </button>
+    </div>
+    <div class="flex justify-between items-center mt-2" *ngIf="isEditMode">
+      <button nz-button [nzSize]="'small'" nzType="link" nzDanger (click)="onDiscard()">Discard</button>
+      <button nz-button [nzSize]="'small'" nzType="link" (click)="addItems()">+ Add More</button>
+      <button nz-button [nzSize]="'small'" nzType="link" (click)="onApply()">Apply</button>
+    </div>
+  </div>
+</div>

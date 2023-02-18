@@ -1,15 +1,14 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AddDoctorComponent } from './add-doctor/add-doctor.component';
-import { AddNewMedicalCenterComponent } from './add-new-medical-center/add-new-medical-center.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddCenterComponent } from './add-center/add-center.component';
 import { CommonModule } from '@angular/common';
-import { DetailsWidgetComponent } from './details-widget/details-widget.component';
-import { EditMedicalCenterComponent } from './edit-medical-center/edit-medical-center.component';
+import { CreateDoctorComponent } from './create-doctor/create-doctor.component';
+import { DoctorComponent } from './doctor.component';
+import { DoctorDetailsWidgetComponent } from './doctor-details-widget/doctor-details-widget.component';
+import { DoctorRoutes } from './doctor.routing';
+import { EditDoctorComponent } from './edit-doctor/edit-doctor.component';
 import { IconsProviderModule } from '../../icons-provider.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MedicalCenterComponent } from './medical-center.component';
-import { MedicalCenterRoutes } from './medical-center.routing';
 import { NgModule } from '@angular/core';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -26,12 +25,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { ScheduleItemComponent } from './details-widget/schedule-item/schedule-item.component';
-
+import { ScheduleItemComponent } from './doctor-details-widget/schedule-item/schedule-item.component';
 @NgModule({
   imports: [
     CommonModule,
-    MedicalCenterRoutes,
+    DoctorRoutes,
     NzFormModule,
     ReactiveFormsModule,
     FormsModule,
@@ -54,12 +52,12 @@ import { ScheduleItemComponent } from './details-widget/schedule-item/schedule-i
     NzCheckboxModule,
   ],
   declarations: [
-    MedicalCenterComponent,
-    AddNewMedicalCenterComponent,
-    DetailsWidgetComponent,
-    AddDoctorComponent,
-    EditMedicalCenterComponent,
+    DoctorComponent,
+    DoctorDetailsWidgetComponent,
+    CreateDoctorComponent,
     ScheduleItemComponent,
+    EditDoctorComponent,
+    AddCenterComponent,
   ],
 })
-export class MedicalCenterModule {}
+export class DoctorModule {}

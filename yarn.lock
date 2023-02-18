@@ -7191,6 +7191,11 @@ modify-values@^1.0.0:
   resolved "https://registry.npmjs.org/modify-values/-/modify-values-1.0.1.tgz"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
+moment@2.29.4:
+  version "2.29.4"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+
 ms@^2.0.0, ms@^2.1.1, ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
@@ -7256,6 +7261,13 @@ ng-zorro-antd@14.2.1:
     "@angular/cdk" "^14.1.0"
     "@ant-design/icons-angular" "^14.1.0"
     date-fns "^2.16.1"
+    tslib "^2.3.0"
+
+ngx-infinite-scroll@14:
+  version "14.0.1"
+  resolved "https://registry.npmjs.org/ngx-infinite-scroll/-/ngx-infinite-scroll-14.0.1.tgz"
+  integrity sha512-PlGL29d2PxNJTn6qdXs4Es0HlJTZ/ZqOVvFWECWm7mK2fN/q+q62s0iUQ7xRf76NuqoNovXvrjZ1zwLFT6c0Wg==
+  dependencies:
     tslib "^2.3.0"
 
 nice-try@^1.0.4:

@@ -3,6 +3,8 @@ import {
   DashboardOutline,
   FormOutline,
   IeOutline,
+  Loading3QuartersOutline,
+  LoadingOutline,
   LockOutline,
   MenuFoldOutline,
   MenuUnfoldOutline,
@@ -26,7 +28,9 @@ const icons = [
   CloudUploadOutline,
   IeOutline,
   PlusOutline,
+  LoadingOutline,
   SmileTwoTone,
+  Loading3QuartersOutline,
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
   environment: 'LOCAL',
-  baseApiUrl: 'http://localhost:3000',
+  baseApiUrl: 'https://dalilserver.onrender.com/v1',
+  proxyUrl: 'https://cors-eolf.onrender.com',
 };

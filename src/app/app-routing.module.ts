@@ -32,6 +32,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'doctor',
+        loadChildren: () =>
+          import('./views/doctor/doctor.module').then((m) => m.DoctorModule),
+      },
+      {
         path: '**',
         component: UnderConstructionComponent,
       },

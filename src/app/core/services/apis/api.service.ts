@@ -1,7 +1,9 @@
 import {
+  IAddScheduleRequest,
   IBaseFilterRequest,
   ICreateAMedicalCenter,
-  IFilterMedicalCentersRequest,
+  ICreateNewDoctor as ICreateNewDoctorRequest,
+  IDoctorFilterRequest,
   IFilterSchedulesRequest,
   ILoginRequest,
 } from './../../models/request.interfaces';
@@ -9,13 +11,14 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { cleanObject } from '../../utils/util-functions';
+import { environment } from '../../../../environments/environment';
 import { stringify } from 'qs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  endPoint = `https://cors-eolf.onrender.com`;
+  endPoint = environment.proxyUrl;
   constructor(private http: HttpClient) {}
   authLoginRequest(payload: ILoginRequest) {
     return this.http.post(`${this.endPoint}/login`, payload);
@@ -26,11 +29,17 @@ export class ApiService {
   filterCities() {
     return this.http.get(`${this.endPoint}/cities`);
   }
-  filterMedicalCenters(options: IFilterMedicalCentersRequest) {
+  filterMedicalCenters(options: IDoctorFilterRequest) {
     options = cleanObject(options);
     return this.http.get(
       `${this.endPoint}/medicalCenters?${stringify(options)}`
     );
+  }
+  medicalCenterById(id: string) {
+    return this.http.get(`${this.endPoint}/medicalCenters/${id}`);
+  }
+  updateMedicalCenterById(id: string, payload: ICreateAMedicalCenter) {
+    return this.http.patch(`${this.endPoint}/medicalCenters/${id}`, payload);
   }
   createMedicalCenter(payload: ICreateAMedicalCenter) {
     return this.http.post(`${this.endPoint}/medicalCenters`, payload);
@@ -39,8 +48,29 @@ export class ApiService {
     options = cleanObject(options);
     return this.http.get(`${this.endPoint}/schedules?${stringify(options)}`);
   }
-  filterDoctors(options: IBaseFilterRequest) {
+  filterDoctors(options: IDoctorFilterRequest) {
     options = cleanObject(options);
     return this.http.get(`${this.endPoint}/doctors?${stringify(options)}`);
+  }
+  doctorById(id: string) {
+    return this.http.get(`${this.endPoint}/doctors/${id}`);
+  }
+  createSchedule(payload: IAddScheduleRequest) {
+    return this.http.post(`${this.endPoint}/schedules`, payload);
+  }
+  createDoctor(payload: ICreateNewDoctorRequest) {
+    return this.http.post(`${this.endPoint}/doctors`, payload);
+  }
+  filterMedicalSpecialties(options: IBaseFilterRequest) {
+    options = cleanObject(options);
+    return this.http.get(
+      `${this.endPoint}/medicalSpecialties?${stringify(options)}`
+    );
+  }
+  updateDoctor(id: string, payload: ICreateNewDoctorRequest) {
+    return this.http.patch(`${this.endPoint}/doctors/${id}`, payload);
+  }
+  deleteSchedules(id: string) {
+    return this.http.delete(`${this.endPoint}/schedules/${id}`);
   }
 }

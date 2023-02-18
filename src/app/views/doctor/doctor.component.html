@@ -1,0 +1,84 @@
+<nz-spin [nzSpinning]="pageLoading">
+  <div class="min-h-[130px] px-[25px] py-[22px] bg-white boxShadow-primary rounded-xl mb-[35px]">
+    <h2 class="text-[20px] font-semibold text-black">Filter</h2>
+    <div class="flex justify-between items-center">
+      <div class="flex items-end gap-[26px]">
+        <div class="max-w-[157px] w-full">
+          <nz-form-label>Filter by Specialty</nz-form-label>
+          <nz-form-control>
+            <nz-select nzShowSearch nzServerSearch nzAllowClear [(ngModel)]="selectedSpecialtiesOption"
+              (nzOnSearch)="onSearchSpeciality($event)" (ngModelChange)="onChangeSpecialtiesOption($event)"
+              nzSize="default" nzPlaceHolder="Speciality">
+              <nz-option *ngFor="let item of medicalSpecialtiesOptions" [nzValue]="item.value"
+                [nzLabel]="item.label"></nz-option>
+            </nz-select>
+            <nz-option *ngIf="isSpecialtiesOptionLoading" nzDisabled nzCustomContent>
+              <span nz-icon nzType="loading" class="loading-icon"></span>
+              Loading Data...
+            </nz-option>
+          </nz-form-control>
+        </div>
+        <div class="max-w-[157px] w-full">
+          <nz-form-label>Filter by Level</nz-form-label>
+          <nz-form-control>
+            <nz-select nzShowSearch nzAllowClear [(ngModel)]="selectedLevelOption"
+              (ngModelChange)="onChangeLevelOption($event)" nzSize="default" nzPlaceHolder="Level">
+              <nz-option *ngFor="let item of levelOptions" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+        <div class="flex items-center flex-1 justify-end select-none  w-[335px]">
+          <div class="bg-[#F5F5F5] h-[46px] w-[335px] rounded-full relative">
+            <input (keyup)="onSearch($event)" type="text" placeholder="Search here..."
+              class="h-full w-full text-[13px] font-medium bg-[#F5F5F5] outline-none px-[16px] rounded-full" />
+            <div class="absolute right-0 top-0 flex items-center h-full pr-4">
+              <img src="../../../../assets/icons/search.png" class="" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <button nz-button (click)="onAddNewData()" nzSize="large"
+          class="rounded-full h-[46px] transition hover:bg-primary hover:text-white border-primary text-base text-primary font-semibold px-[24px]">
+          + Add New Data
+        </button>
+      </div>
+    </div>
+  </div>
+  <h2 class="text-[#999999] text-[18px] font-semibold">Data</h2>
+  <div class="flex">
+    <div class="table-blk bg-white rounded-[13px] p-[15px] col-span-8 flex-1">
+      <nz-table class="table-gaps" #basicTable [nzData]="listOfData" [nzScroll]="{ x: '500px' }" [nzPageSize]="10"
+        [nzFrontPagination]="false" (nzPageIndexChange)="onPageChange($event)" [nzShowPagination]="true"
+        [nzTotal]="total">
+        <thead>
+          <tr>
+            <th nzWidth="120px">Doctor ID</th>
+            <th nzWidth="220px">Doctor Name</th>
+            <th nzWidth="150px">Gender</th>
+            <th nzWidth="150px">Specialty</th>
+            <th nzWidth="100px">Level</th>
+            <th nzWidth="150px">Birthdate (Age)</th>
+            <th nzWidth="100px">Biography</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data" [ngClass]="{'active': data?.doctorId === selectedRowData?.doctorId}">
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.doctorId }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.firstName }} {{data.lastName}}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.gender }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.specialty }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.level }}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data.birthDate | date:'MMM d, y'}}</td>
+            <td class="cursor-pointer" (click)="onSelectRow(data)">
+              No Property Found
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="content-right-blk" *ngIf="showRightDrawer" [@fadeInRight]>
+      <app-doctor-details-widget [data]="selectedRowData"></app-doctor-details-widget>
+    </div>
+  </div>
+</nz-spin>

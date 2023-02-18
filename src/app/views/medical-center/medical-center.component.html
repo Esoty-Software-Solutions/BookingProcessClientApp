@@ -78,8 +78,16 @@
               </div>
             </td>
             <td class="cursor-pointer" (click)="onSelectRow(data)">
-              <span *ngFor="let ph of data?.phoneNumber || []">
-                {{ ph }} <br />
+              <span nz-typography nzEllipsis nz-popover [nzPopoverContent]="contentTemplatePhoneNumber">
+                <ng-template #contentTemplatePhoneNumber>
+                  <div class="w-[300px]">
+                    <b class="mb-2 font-bold block">{{data.name }}</b>
+                    <div *ngFor="let ph of data?.phoneNumber || []" nz-typography nzCopyable [nzCopyText]="ph">
+                      {{ ph }}
+                    </div>
+                  </div>
+                </ng-template>
+                {{data.name }}
               </span>
             </td>
             <td class="cursor-pointer" (click)="onSelectRow(data)">

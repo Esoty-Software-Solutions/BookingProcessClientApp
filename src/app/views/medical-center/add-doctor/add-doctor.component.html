@@ -30,7 +30,7 @@
         <td>{{ data.level }}</td>
         <td>{{ data.birthDate | date:'MMM d, y'}}</td>
         <td>
-          <button nz-button class="border-primary text-primary">+ Add</button>
+          <button nz-button class="border-primary text-primary" (click)="onAddDoctor(data)">+ Add</button>
         </td>
       </tr>
     </tbody>
