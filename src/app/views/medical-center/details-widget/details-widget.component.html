@@ -23,7 +23,7 @@
       </div>
       <div class="flex mt-[36px] justify-between items-center">
         <div class="">
-          <h2 class="text-white font-bold text-[14px]">{{schedulesList?.length}} Doctors Scheduled</h2>
+          <h2 class="text-white font-bold text-[14px]">{{schedules?.length}} Doctors Scheduled</h2>
           <p class="text-[11px] text-[#FFFFFF] opacity-[.65] font-medium my-1">Closest Exparation Date is 15-09-2022
           </p>
         </div>
@@ -48,7 +48,8 @@
     </div>
     <div class="sch-scroller-container overflow-y-scroll h-[45vh] custom-scrollbar" infiniteScroll
       [infiniteScrollDistance]="100" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
-      <app-schedule-item [data]="item" *ngFor="let item of schedulesList"></app-schedule-item>
+      <app-schedule-item [data]="item" *ngFor="let item of schedules"
+        (afterUpdateSchedule)="afterUpdateSchedule()"></app-schedule-item>
       <nz-spin *ngIf="infiniteScrollLoading" nzSize="large" nzTip="Loading...">
         <div style="min-height: 200px;">
         </div>

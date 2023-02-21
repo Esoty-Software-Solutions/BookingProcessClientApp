@@ -10,6 +10,5 @@ export class LayoutComponent {
   isSidebarOpen = true;
   onToggleSidebar(e: any) {
     this.isSidebarOpen = !this.isSidebarOpen;
-    console.log(this.isSidebarOpen, 'sssss');
   }
 }

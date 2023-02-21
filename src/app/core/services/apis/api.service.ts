@@ -18,7 +18,7 @@ import { stringify } from 'qs';
   providedIn: 'root',
 })
 export class ApiService {
-  endPoint = environment.proxyUrl;
+  endPoint = environment.baseApiUrl;
   constructor(private http: HttpClient) {}
   authLoginRequest(payload: ILoginRequest) {
     return this.http.post(`${this.endPoint}/login`, payload);
@@ -44,10 +44,6 @@ export class ApiService {
   createMedicalCenter(payload: ICreateAMedicalCenter) {
     return this.http.post(`${this.endPoint}/medicalCenters`, payload);
   }
-  filterSchedules(options: IFilterSchedulesRequest) {
-    options = cleanObject(options);
-    return this.http.get(`${this.endPoint}/schedules?${stringify(options)}`);
-  }
   filterDoctors(options: IDoctorFilterRequest) {
     options = cleanObject(options);
     return this.http.get(`${this.endPoint}/doctors?${stringify(options)}`);
@@ -55,8 +51,21 @@ export class ApiService {
   doctorById(id: string) {
     return this.http.get(`${this.endPoint}/doctors/${id}`);
   }
+  updateDoctor(id: string, payload: ICreateNewDoctorRequest) {
+    return this.http.patch(`${this.endPoint}/doctors/${id}`, payload);
+  }
+  filterSchedules(options: IFilterSchedulesRequest) {
+    options = cleanObject(options);
+    return this.http.get(`${this.endPoint}/schedules?${stringify(options)}`);
+  }
   createSchedule(payload: IAddScheduleRequest) {
     return this.http.post(`${this.endPoint}/schedules`, payload);
+  }
+  updateSchedule(id: string, payload: IAddScheduleRequest) {
+    return this.http.patch(`${this.endPoint}/schedules/${id}`, payload);
+  }
+  deleteSchedules(id: string) {
+    return this.http.delete(`${this.endPoint}/schedules/${id}`);
   }
   createDoctor(payload: ICreateNewDoctorRequest) {
     return this.http.post(`${this.endPoint}/doctors`, payload);
@@ -66,11 +75,5 @@ export class ApiService {
     return this.http.get(
       `${this.endPoint}/medicalSpecialties?${stringify(options)}`
     );
-  }
-  updateDoctor(id: string, payload: ICreateNewDoctorRequest) {
-    return this.http.patch(`${this.endPoint}/doctors/${id}`, payload);
-  }
-  deleteSchedules(id: string) {
-    return this.http.delete(`${this.endPoint}/schedules/${id}`);
   }
 }

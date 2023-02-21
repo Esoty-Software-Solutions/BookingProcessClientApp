@@ -20,6 +20,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -52,6 +53,7 @@ import { ScheduleItemComponent } from './details-widget/schedule-item/schedule-i
     NzAffixModule,
     NzRadioModule,
     NzCheckboxModule,
+    NzPopconfirmModule,
   ],
   declarations: [
     MedicalCenterComponent,

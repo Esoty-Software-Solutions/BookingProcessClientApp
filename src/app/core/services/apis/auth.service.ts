@@ -16,7 +16,7 @@ export class AuthService {
   logout() {
     const id = this.nzMessageService.loading('Logging out...');
     this.localStorageService.clearAll();
-    console.log('logout');
+
     this.apiService.logoutRequest().subscribe({
       next: (res) => {
         this.nzMessageService.success('Logout successfully');

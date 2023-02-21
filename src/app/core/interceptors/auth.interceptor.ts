@@ -28,23 +28,19 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const accessToken: any = this.localStorageService.getToken();
     ``;
-    console.log(
-      '🚀 ~ file: auth.interceptor.ts:31 ~ AuthInterceptor ~ accessToken',
-      accessToken
-    );
     if (accessToken) {
       req = req.clone({
         setHeaders: {
           Authorization: `${accessToken}`,
-          'Target-URL': environment.baseApiUrl,
+          // 'Target-URL': environment.baseApiUrl,
         },
       });
     } else {
-      req = req.clone({
-        setHeaders: {
-          'Target-URL': environment.baseApiUrl,
-        },
-      });
+      // req = req.clone({
+      //   setHeaders: {
+      //     'Target-URL': environment.baseApiUrl,
+      //   },
+      // });
     }
     return next.handle(req);
   }

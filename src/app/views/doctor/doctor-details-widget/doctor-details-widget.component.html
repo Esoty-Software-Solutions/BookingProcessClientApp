@@ -48,7 +48,8 @@
     </div>
     <div class="sch-scroller-container overflow-y-scroll h-[45vh] custom-scrollbar" infiniteScroll
       [infiniteScrollDistance]="100" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
-      <app-schedule-item [data]="item" *ngFor="let item of schedulesList"></app-schedule-item>
+      <app-schedule-item [data]="item" *ngFor="let item of schedulesList"
+        (afterUpdateSchedule)="afterUpdateSchedule()"></app-schedule-item>
       <nz-spin *ngIf="infiniteScrollLoading" nzSize="large" nzTip="Loading...">
         <div style="min-height: 200px;">
         </div>

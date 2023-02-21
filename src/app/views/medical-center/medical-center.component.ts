@@ -35,12 +35,20 @@ export class MedicalCenterComponent implements OnInit {
     this.filterMedicalCenters({ limit: 10 });
   }
   onAddNewData() {
-    this.nzModalService.create({
-      nzTitle: 'Add new medical center',
-      nzContent: AddNewMedicalCenterComponent,
-      nzFooter: null,
-      nzWidth: '1000px',
-    });
+    this.nzModalService
+      .create({
+        nzTitle: 'Add new medical center',
+        nzContent: AddNewMedicalCenterComponent,
+        nzFooter: null,
+        nzWidth: '1000px',
+      })
+      .afterClose.pipe(untilDestroyed(this))
+      .subscribe({
+        next: (res) => {
+          if (!res) return;
+          this.filterMedicalCenters({ limit: 10 });
+        },
+      });
   }
   citiesOptions: any[] = [];
   filterCities() {
@@ -62,7 +70,6 @@ export class MedicalCenterComponent implements OnInit {
   }
   selectedCity: string = '';
   onChangeCity(value: any) {
-    console.log(value, 'value');
     this.filterMedicalCenters({
       city: value,
       limit: 10,

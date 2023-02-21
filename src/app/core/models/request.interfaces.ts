@@ -24,6 +24,7 @@ export interface IFilterSchedulesRequest extends IBaseFilterRequest {
   doctorId?: string;
   medicalCenterId?: string;
   sortBy?: 'doctor' | 'medicalCenter';
+  groupBy?: 'doctor' | 'medicalCenter';
   specialty?: string;
   city?: string;
   fromDate?: string;

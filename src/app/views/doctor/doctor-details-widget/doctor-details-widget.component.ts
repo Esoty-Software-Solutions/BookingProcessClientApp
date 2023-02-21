@@ -35,12 +35,12 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
     private nzModalService: NzModalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.data) {
       this.data = changes.data.currentValue;
       this.filterSchedules({
         doctorId: this.data?.doctorId,
         limit: 10,
+        groupBy: 'medicalCenter',
       });
     }
   }
@@ -68,6 +68,7 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
       searchQuery: this.searchTerm,
       medicalCenterId: this.data?.doctorId,
       limit: 10,
+      groupBy: 'medicalCenter',
     });
   }
   onAddCenter() {
@@ -85,6 +86,7 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
         this.filterSchedules({
           doctorId: this.data?.doctorId,
           limit: 10,
+          groupBy: 'medicalCenter',
         });
       });
   }
@@ -102,7 +104,6 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
   hasMore = true;
   infiniteScrollLoading = false;
   onScroll() {
-    console.log('scrolled!!');
     if (!this.hasMore) return;
     this.infiniteScrollLoading = true;
     this.apiService
@@ -110,6 +111,7 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
         medicalCenterId: this.data?.doctorId,
         limit: 10,
         skip: this.schedulesList.length,
+        groupBy: 'medicalCenter',
       })
       .pipe(untilDestroyed(this))
       .subscribe({
@@ -123,5 +125,12 @@ export class DoctorDetailsWidgetComponent implements OnInit, OnChanges {
         error: (err) => (this.infiniteScrollLoading = false),
         complete: () => (this.infiniteScrollLoading = false),
       });
+  }
+  afterUpdateSchedule() {
+    this.filterSchedules({
+      doctorId: this.data?.doctorId,
+      limit: 10,
+      groupBy: 'medicalCenter',
+    });
   }
 }

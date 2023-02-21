@@ -17,7 +17,6 @@ import { EditMedicalCenterComponent } from './../edit-medical-center/edit-medica
 import { IFilterSchedulesRequest } from '../../../core/models/request.interfaces';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { debounce } from '../../../core/decorators/debounce.decorator';
-
 @Component({
   selector: 'app-details-widget',
   templateUrl: './details-widget.component.html',
@@ -32,18 +31,18 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
     private nzModalService: NzModalService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.data) {
       this.data = changes.data.currentValue;
       this.filterSchedules({
         medicalCenterId: this.data?.medicalCenterId,
         limit: 10,
+        groupBy: 'doctor',
       });
     }
   }
   ngOnInit() {}
   dateFormat = 'dd/MM/yyyy';
-  schedulesList: ISchedulesEntity[] = [];
+  schedules: ISchedulesEntity[] = [];
   filterSchedules(options: IFilterSchedulesRequest) {
     this.pageLoading = true;
     this.apiService
@@ -52,7 +51,7 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
       .subscribe({
         next: (res: any) => {
           this.pageLoading = false;
-          this.schedulesList = res?.data?.objectArray;
+          this.schedules = res?.data?.objectArray;
         },
         error: (err) => (this.pageLoading = false),
         complete: () => (this.pageLoading = false),
@@ -82,6 +81,7 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
         this.filterSchedules({
           medicalCenterId: this.data?.medicalCenterId,
           limit: 10,
+          groupBy: 'doctor',
         });
       });
   }
@@ -99,26 +99,31 @@ export class DetailsWidgetComponent implements OnInit, OnChanges {
   hasMore = true;
   infiniteScrollLoading = false;
   onScroll() {
-    console.log('scrolled!!');
     if (!this.hasMore) return;
     this.infiniteScrollLoading = true;
     this.apiService
       .filterSchedules({
         medicalCenterId: this.data?.medicalCenterId,
         limit: 10,
-        skip: this.schedulesList.length,
+        skip: this.schedules.length,
+        groupBy: 'doctor',
       })
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (res: any) => {
-          this.schedulesList = this.schedulesList.concat(
-            res?.data?.objectArray
-          );
+          this.schedules = this.schedules.concat(res?.data?.objectArray);
           this.hasMore = res?.data?.hasMore;
           this.infiniteScrollLoading = false;
         },
         error: (err) => (this.infiniteScrollLoading = false),
         complete: () => (this.infiniteScrollLoading = false),
       });
+  }
+  afterUpdateSchedule() {
+    this.filterSchedules({
+      medicalCenterId: this.data?.medicalCenterId,
+      limit: 10,
+      groupBy: 'doctor',
+    });
   }
 }
